@@ -5,7 +5,7 @@ const Joi = require("joi");
 const path = require("path");
 
 const requestSchema = Joi.object({
-  id: Joi.number(),
+  id: Joi.string(),
   name: Joi.string(),
   types: Joi.string(),
   url: Joi.string(),
@@ -25,11 +25,14 @@ function getPokeByTN(req, res, next) {
     }
 
     let result = [];
+
     Object.keys(filterQuery).forEach((condition) => {
       result = result.length
         ? result.filter((poke) => poke[condition] === filterQuery[condition])
         : pokemons.filter((poke) => poke[condition] === filterQuery[condition]);
     });
+    //stuck at find by types
+
     //send response
     res.status(200).send(result);
   } catch (error) {

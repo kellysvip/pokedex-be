@@ -1,9 +1,9 @@
-const lodash = require("lodash");
 const { validateSchema } = require("../../../ultis/joiValidate");
+const { validateNameTypes } = require("../../../ultis/validateNameTypes");
 const fs = require("fs");
 const Joi = require("joi");
 const path = require("path");
-const crypto = require("crypto");
+
 
 const requestSchema = Joi.object({
   name: Joi.string(),
@@ -18,16 +18,16 @@ function updatePoke(req, res, next) {
       req.body
     ));
     const { pokeId } = req.params;
-
-
     const filePath = path.join(__dirname, "../../../pokemon.json");
+
     //Read data from db.json then parse to JSobject
     const { pokemons } = (poke = JSON.parse(
       fs.readFileSync(filePath, "utf-8")
     ));
+    validateNameTypes(name, types, pokemons)
 
     //find pokemon by id
-    const targetIndex = pokemons.findIndex((pokemon) => pokemon.id == pokeId);
+    const targetIndex = pokemons.findIndex((pokemon) => pokemon.id === pokeId);
     if (targetIndex < 0) {
       const exception = new Error(`Pokemon not found`);
       exception.statusCode = 404;

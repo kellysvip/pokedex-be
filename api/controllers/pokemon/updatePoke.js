@@ -19,7 +19,7 @@ function updatePoke(req, res, next) {
     ));
     const { pokeId } = req.params;
     const filePath = path.join(__dirname, "../../../pokemon.json");
-
+    
     //Read data from db.json then parse to JSobject
     const { pokemons } = (poke = JSON.parse(
       fs.readFileSync(filePath, "utf-8")
@@ -28,6 +28,7 @@ function updatePoke(req, res, next) {
 
     //find pokemon by id
     const targetIndex = pokemons.findIndex((pokemon) => pokemon.id === pokeId);
+
     if (targetIndex < 0) {
       const exception = new Error(`Pokemon not found`);
       exception.statusCode = 404;

@@ -9,7 +9,7 @@ const crypto = require("crypto");
 const requestSchema = Joi.object({
   //   id: Joi.number().required(),
   name: Joi.string().required(),
-  types: Joi.array().length(2).required(),
+  types: Joi.array().required(),
   url: Joi.string().required(),
 });
 
